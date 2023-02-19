@@ -9,6 +9,7 @@ import Style from "../styles/allowedVoter.module.css";
 import images from "../assets";
 import Button from "../components/Button/Button";
 import Input from "../components/Input/Input";
+import { VotingAddress } from "../context/constants";
 
 const allowedVoters = () => {
   const [fileUrl, setFileUrl] = useState(null);
@@ -20,15 +21,13 @@ const allowedVoters = () => {
 
   const router = useRouter();
 
-  const { uploadToIPFS, createVoter, getNewCandidate, voterArray } =
+  const { uploadToIPFS, createVoter, getNewCandidate,  getAllVoterData, voterArray } =
     useContext(VotingContext);
 
-  // console.log(voterArray);
+  console.log(voterArray);
 
   //-------------VOTERS
   const onDrop = useCallback(async (acceptedFile) => {
-    console.log(acceptedFile);
-    // console.log(acceptedFile[0]);
     const url = await uploadToIPFS(acceptedFile[0]);
 
     setFileUrl(url);
@@ -42,7 +41,8 @@ const allowedVoters = () => {
 
   useEffect(() => {
     getNewCandidate();
-    // console.log(voterArray);
+    getAllVoterData();
+    console.log(voterArray);
   }, []);
 
   return (
@@ -68,12 +68,12 @@ const allowedVoters = () => {
         {!fileUrl && (
           <div className={Style.sideInfo}>
             <div className={Style.sideInfo_box}>
-              <h4>Create Candidate For Voting</h4>
+              <h4>Create voter For Voting</h4>
               <p>
                 Blockchain voting orgainzation, privide ethereum blockchain eco
                 system
               </p>
-              <p className={Style.sideInfo_para}>Contract Candidate List</p>
+              <p className={Style.sideInfo_para}>Contract Voter List</p>
             </div>
             <div className={Style.car}>
               {voterArray.map((el, i) => (
@@ -83,11 +83,7 @@ const allowedVoters = () => {
                   </div>
 
                   <div className={Style.card_info}>
-                    <p>
-                      {JSON.stringify(el)}
-                      {/* {el[1]} #{el[1].toNumber()} */}
-                    </p>
-                    <p>{el[0]}</p>
+                    <p>{el[1]}</p>
                     <p>Address: {el[3].slice(0, 10)}..</p>
                   </div>
                 </div>
@@ -166,12 +162,13 @@ const allowedVoters = () => {
           <Image src={images.creator} alt="user profile" />
           <p>Notice</p>
           <p>
-            Organizer <span>0xf39Fd6e51..</span>
+            Organizer <span>0xF9764A4A3836fe2638bB54CC3707123565531032</span>
           </p>
           <p>
             Only organizer of the voting contract can create voter and candidate
             for voting election
           </p>
+          <p>View detail history voting on https://goerli.etherscan.io/ address: {VotingAddress}</p>
         </div>
       </div>
     </div>

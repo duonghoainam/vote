@@ -9,6 +9,7 @@ import Style from "../styles/allowedVoter.module.css";
 import images from "../assets";
 import Button from "../components/Button/Button";
 import Input from "../components/Input/Input";
+import { VotingAddress } from "../context/constants";
 
 const candidateRegisration = () => {
   const [fileUrl, setFileUrl] = useState(null);
@@ -41,6 +42,7 @@ const candidateRegisration = () => {
 
   useEffect(() => {
     getNewCandidate();
+    console.log('candidateArray',candidateArray)
   }, []);
   return (
     <div className={Style.createVoter}>
@@ -162,12 +164,13 @@ const candidateRegisration = () => {
           <Image src={images.creator} alt="user profile" />
           <p>Notice</p>
           <p>
-            Organizer <span>0xf39Fd6e51..</span>
+            Organizer <span>0xF9764A4A3836fe2638bB54CC3707123565531032</span>
           </p>
           <p>
             Only organizer of the voting contract can create voter and candidate
             for voting election
           </p>
+          <p>View detail history voting on https://goerli.etherscan.io/ address: {VotingAddress}</p>
         </div>
       </div>
     </div>
